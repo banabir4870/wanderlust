@@ -1,3 +1,4 @@
+import BookingCard from '@/components/BookingCard';
 import { DeleteDestination } from '@/components/DeleteDestination';
 import { DestinationEditModal } from '@/components/DestinationEditModal';
 import { Button, CalendarHeader, Card } from '@heroui/react';
@@ -16,7 +17,7 @@ const DestinationDetailsPage = async ({ params }) => {
     const { id } = await params;
     const res = await fetch(`http://localhost:5000/destination/${id}`)
     const destination = await res.json();
-    const { imageUrl, country, destinationName, price, duration, departureDate, description } = destination;
+    const { imageUrl, country, destinationName, duration, description } = destination;
     return (
         <div className='w-10/12 mx-auto my-6'>
             <div className='flex justify-between items-center my-4'>
@@ -37,19 +38,7 @@ const DestinationDetailsPage = async ({ params }) => {
                         <p>{description}</p>
                     </div>
                 </div>
-                <Card className='border'>
-                    <p className='text-gray-500'>Starting From</p>
-                    <h2 className='text-cyan-500 text-2xl'>${price}</h2>
-                    <p className='text-gray-500'>Per Person</p>
-
-                    <h3 className='border p-2'>{departureDate}</h3>
-                    <Button variant='secondary' className={'w-full rounded-none'}>Book Now <FaArrowRightLong /></Button>
-                    <ul>
-                        <li className='flex gap-2 items-center'><FaCheck className='text-green-300' />Free Cancellation Up To 7 Days</li>
-                        <li className='flex gap-2 items-center'><FaCheck className='text-green-300' />Travel Insurance Included</li>
-                        <li className='flex gap-2 items-center'><FaCheck className='text-green-300' />24/7 Customer Support</li>
-                    </ul>
-                </Card>
+                <BookingCard destination={destination}></BookingCard>
             </div>
 
         </div>
