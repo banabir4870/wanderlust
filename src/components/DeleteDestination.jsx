@@ -7,7 +7,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 export function DeleteDestination({ destination }) {
     const {_id, imageUrl, country, destinationName, price, duration, departureDate, description } = destination;
     const handleDelete = async () =>{
-        const res = await fetch(`http://localhost:5000/destination/${_id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destination/${_id}`, {
             method: 'DELETe',
             headers: {
                 'content-type': 'application/json'

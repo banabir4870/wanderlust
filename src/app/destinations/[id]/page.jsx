@@ -1,7 +1,9 @@
 import BookingCard from '@/components/BookingCard';
 import { DeleteDestination } from '@/components/DeleteDestination';
 import { DestinationEditModal } from '@/components/DestinationEditModal';
+import { auth } from '@/lib/auth';
 import { Button, CalendarHeader, Card } from '@heroui/react';
+import { headers } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -15,7 +17,15 @@ import { TiTick } from 'react-icons/ti';
 
 const DestinationDetailsPage = async ({ params }) => {
     const { id } = await params;
-    const res = await fetch(`http://localhost:5000/destination/${id}`)
+    const {token} = await auth.api.getToken({
+        headers: await headers()
+    })
+    console.log('token: ', token)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destination/${id}`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    })
     const destination = await res.json();
     const { imageUrl, country, destinationName, duration, description } = destination;
     return (
